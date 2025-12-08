@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-			background-color: grey;
+            background-color: grey;
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 40px;
@@ -27,10 +27,19 @@
         .zoom-link:hover {
             background-color: #f0f0f0;
         }
+        .drive-link {
+            display: block;
+            margin-top: 10px;
+        }
+        #folder-status {
+            margin-top: 40px;
+            font-size: 14px;
+            padding: 10px;
+            border-top: 1px solid #333;
+        }
     </style>
 </head>
 <body>
-	
     <div>
         <img class="logo" src="https://i.ibb.co/XfvZcC5K/IMG-2060.jpg" alt="WUP PhD Logo">
     </div>
@@ -45,12 +54,12 @@
             Zoom Link
         </a>
     </div>
-	
-	<br><br>
+
+    <br><br>
 
     <div>
         <a
-            class="BA321"
+            class="drive-link BA321"
             href="https://drive.google.com/open?id=1LUWgbJljkcapzuFFzCwByFkOIVOO97bP&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
@@ -61,7 +70,7 @@
 
     <div>
         <a
-            class="BA322"
+            class="drive-link BA322"
             href="https://drive.google.com/open?id=1Nwf0zNMtiw5HhQUSm62n2y8J7z3Jb7LP&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
@@ -72,7 +81,7 @@
 
     <div>
         <a
-            class="BA326"
+            class="drive-link BA326"
             href="https://drive.google.com/open?id=1eeMsx4v5NhduoCs6yJhYoK4l-4Z8qndY&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
@@ -81,9 +90,9 @@
         </a>
     </div>
 
-        <div>
+    <div>
         <a
-            class="BA329"
+            class="drive-link BA329"
             href="https://drive.google.com/open?id=1ihSzTO30_vZrQ48hSxCZ86m1-GivJsfv&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
@@ -92,9 +101,9 @@
         </a>
     </div>
 
-        <div>
+    <div>
         <a
-            class="BA330"
+            class="drive-link BA330"
             href="https://drive.google.com/open?id=1lzkTJaTkmF7OnaOnXKN2PEDU5Tfh677I&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
@@ -103,5 +112,65 @@
         </a>
     </div>
 
+    <!-- Dynamic note at the bottom -->
+    <div id="folder-status"  style="white-space: pre-line; margin-top: 40px; font-size: 14px; padding: 10px;">  style="white-space: pre-line; margin-top: 40px; font-size: 14px; padding: 10px;"
+        Loading Google Drive folder status...
+    </div>
+
+    <script>
+        // Replace this with your actual Apps Script web app URL
+        const STATUS_API_URL = "https://script.google.com/macros/s/AKfycbyollenXMXxuawkcUdW2nJWJ03qg3kWt_aHLte0fq-ZjyHHhw-5Dvu7uyS-AhkepQ7i/exec";
+
+		async function loadFolderStatus() {
+			const container = document.getElementById("folder-status");
+			try {
+				const res = await fetch(STATUS_API_URL);
+				if (!res.ok) throw new Error("HTTP " + res.status);
+
+				const data = await res.json();
+
+				// Determine the most recent update across all folders
+				const lastChanges = data.folders
+					.map(f => f.lastUpdated ? new Date(f.lastUpdated) : null)
+					.filter(d => d !== null);
+
+				if (lastChanges.length === 0) {
+					container.textContent = "";   // no files at all → display nothing
+					return;
+				}
+
+				const newest = new Date(Math.max.apply(null, lastChanges));
+
+				// If no change within last 24 hours, hide the note
+				const now = new Date();
+				const diffHours = (now - newest) / 36e5;
+
+				if (diffHours > 24) {
+					container.textContent = "";   // hide note when no recent change
+					return;
+				}
+
+				// Create multi-line summary when changes exist
+				let lines = [];
+				lines.push("Recent updates in your Google Drive folders:");
+
+				data.folders.forEach(f => {
+					const updated = f.lastUpdated
+						? new Date(f.lastUpdated).toLocaleString()
+						: "no files";
+					lines.push(f.name + ": " + f.fileCount + " files, last update " + updated);
+				});
+
+				container.textContent = lines.join("\n");
+
+			} catch (err) {
+				console.error(err);
+				container.textContent = "";
+			}
+		}
+
+		document.addEventListener("DOMContentLoaded", loadFolderStatus);
+	</script>
+	
 </body>
 </html>
