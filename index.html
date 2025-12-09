@@ -11,12 +11,10 @@
             text-align: center;
             padding: 40px;
         }
-		
         .logo {
             max-width: 125px;
             height: auto;
         }
-		
         .zoom-link {
             display: inline-block;
             margin-top: 30px;
@@ -26,34 +24,27 @@
             border-radius: 2px;
             font-size: 14px;
         }
-		
         .zoom-link:hover {
             background-color: #f0f0f0;
         }
-		
         .drive-link {
-            display: block;
+            display: inline-block;
             margin-top: 10px;
         }
-		
-        #folder-status {
-            margin-top: 40px;
-            font-size: 14px;
-            padding: 10px;
-            border-top: 1px solid #333;
+        .folder-status-inline {
+            font-size: 12px;
+            margin-left: 6px;
         }
-				
-		/* Style for all link states */
-		a, a:visited, a:hover {
-		  color: blue; /* Or any color you prefer */
-		  text-decoration: none; /* Removes the underline */
-		}
 
-		/* Optional: Keep hover effect if needed */
-		a:hover {
-		  color: black; /* Example hover color */
-		  text-decoration: underline;
-		}
+        /* Style for all link states */
+        a, a:visited, a:hover {
+            color: blue;
+            text-decoration: none;
+        }
+        a:hover {
+            color: black;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -76,117 +67,98 @@
 
     <div>
         <a
-            class="drive-link BA321"
+            class="drive-link"
+            data-folder-name="BA321 - Research Publication 2"
             href="https://drive.google.com/open?id=1lzkTJaTkmF7OnaOnXKN2PEDU5Tfh677I&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
         >
             BA321 - Research Publication 2
         </a>
+        <span class="folder-status-inline" data-folder-name="BA321 - Research Publication 2"></span>
     </div>
 
     <div>
         <a
-            class="drive-link BA322"
+            class="drive-link"
+            data-folder-name="BA322 - Data And Business Analytics"
             href="https://drive.google.com/open?id=1ihSzTO30_vZrQ48hSxCZ86m1-GivJsfv&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
         >
             BA322 - Data And Business Analytics
         </a>
+        <span class="folder-status-inline" data-folder-name="BA322 - Data And Business Analytics"></span>
     </div>
 
     <div>
         <a
-            class="drive-link BA326"
+            class="drive-link"
+            data-folder-name="BA326 - Advanced Economics Theories And Policies"
             href="https://drive.google.com/open?id=1eeMsx4v5NhduoCs6yJhYoK4l-4Z8qndY&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
         >
             BA326 - Advanced Economics Theories And Policies
         </a>
+        <span class="folder-status-inline" data-folder-name="BA326 - Advanced Economics Theories And Policies"></span>
     </div>
 
     <div>
         <a
-            class="drive-link BA329"
+            class="drive-link"
+            data-folder-name="BA329 - Education in Business Administration"
             href="https://drive.google.com/open?id=1Nwf0zNMtiw5HhQUSm62n2y8J7z3Jb7LP&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
         >
             BA329 - Education in Business Administration
         </a>
+        <span class="folder-status-inline" data-folder-name="BA329 - Education in Business Administration"></span>
     </div>
 
     <div>
         <a
-            class="drive-link BA330"
+            class="drive-link"
+            data-folder-name="BA330 - Wesleyan Spirituality And Advocacies"
             href="https://drive.google.com/open?id=1LUWgbJljkcapzuFFzCwByFkOIVOO97bP&usp=drive_copy"
             target="_blank"
             rel="noopener noreferrer"
         >
             BA330 - Wesleyan Spirituality And Advocacies
         </a>
-    </div>
-
-    <!-- Dynamic note at the bottom -->
-    <div id="folder-status"  style="white-space: pre-line; margin-top: 40px; font-size: 14px; padding: 10px;">  style="white-space: pre-line; margin-top: 40px; font-size: 14px; padding: 10px;"
-        Loading Google Drive folder status...
+        <span class="folder-status-inline" data-folder-name="BA330 - Wesleyan Spirituality And Advocacies"></span>
     </div>
 
     <script>
         const STATUS_API_URL = "https://script.google.com/macros/s/AKfycbzZh275b0qUi5ocpOSo3XERkBCOBMcYZmUU31WWe1Ir0IhBz4_1KTAE_7Zv8ID4UymZ/exec";
 
-		async function loadFolderStatus() {
-			const container = document.getElementById("folder-status");
-			try {
-				const res = await fetch(STATUS_API_URL);
-				if (!res.ok) throw new Error("HTTP " + res.status);
+        async function loadFolderStatus() {
+            try {
+                const res = await fetch(STATUS_API_URL);
+                if (!res.ok) throw new Error("HTTP " + res.status);
 
-				const data = await res.json();
+                const data = await res.json();
 
-				// Determine the most recent update across all folders
-				const lastChanges = data.folders
-					.map(f => f.lastUpdated ? new Date(f.lastUpdated) : null)
-					.filter(d => d !== null);
+                data.folders.forEach(f => {
+                    const updated = f.lastUpdated
+                        ? new Date(f.lastUpdated).toLocaleString()
+                        : "no files";
 
-				if (lastChanges.length === 0) {
-					container.textContent = "";   // no files at all → display nothing
-					return;
-				}
+                    const span = document.querySelector(
+                        '.folder-status-inline[data-folder-name="' + f.name + '"]'
+                    );
+                    if (span) {
+                        span.textContent = ` (${f.fileCount} files, last update ${updated})`;
+                    }
+                });
+            } catch (err) {
+                console.error(err);
+                // On error, do nothing (keep spans empty)
+            }
+        }
 
-				const newest = new Date(Math.max.apply(null, lastChanges));
-
-				// If no change within last 24 hours, hide the note
-				const now = new Date();
-				const diffHours = (now - newest) / 36e5;
-
-				if (diffHours > 24) {
-					container.textContent = "";   // hide note when no recent change
-					return;
-				}
-
-				// Create multi-line summary when changes exist
-				let lines = [];
-				lines.push("Recent updates in the Google Drive folders:");
-
-				data.folders.forEach(f => {
-					const updated = f.lastUpdated
-						? new Date(f.lastUpdated).toLocaleString()
-						: "no files";
-					lines.push(f.name + ": " + f.fileCount + " files, last update " + updated);
-				});
-
-				container.textContent = lines.join("\n");
-
-			} catch (err) {
-				console.error(err);
-				container.textContent = "";
-			}
-		}
-
-		document.addEventListener("DOMContentLoaded", loadFolderStatus);
-	</script>
-	
+        document.addEventListener("DOMContentLoaded", loadFolderStatus);
+    </script>
 </body>
 </html>
