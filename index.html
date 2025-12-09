@@ -18,11 +18,11 @@
         .zoom-link {
             display: inline-block;
             margin-top: 30px;
-            padding: 12px 24px;
+            padding: 6px 12px;
             text-decoration: none;
             border: 1px solid #333;
-            border-radius: 4px;
-            font-size: 18px;
+            border-radius: 2px;
+            font-size: 14px;
         }
         .zoom-link:hover {
             background-color: #f0f0f0;
@@ -118,7 +118,6 @@
     </div>
 
     <script>
-        // Replace this with your actual Apps Script web app URL
         const STATUS_API_URL = "https://script.google.com/macros/s/AKfycbyollenXMXxuawkcUdW2nJWJ03qg3kWt_aHLte0fq-ZjyHHhw-5Dvu7uyS-AhkepQ7i/exec";
 
 		async function loadFolderStatus() {
@@ -152,7 +151,7 @@
 
 				// Create multi-line summary when changes exist
 				let lines = [];
-				lines.push("Recent updates in your Google Drive folders:");
+				lines.push("Recent updates in the Google Drive folders:");
 
 				data.folders.forEach(f => {
 					const updated = f.lastUpdated
