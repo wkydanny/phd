@@ -45,9 +45,20 @@
             color: black;
             text-decoration: underline;
         }
+		
+		.greeting {
+			style="font-size:18px; 
+			font-weight:bold; 
+			margin-bottom:20px; 
+			color:white;
+		}
+
     </style>
 </head>
+
 <body>
+	<div id="greeting" style="font-size:18px; font-weight:bold; margin-bottom:20px; color:white;"></div>
+	
     <div>
         <img class="logo" src="https://i.ibb.co/XfvZcC5K/IMG-2060.jpg" alt="WUP PhD Logo">
     </div>
@@ -129,8 +140,36 @@
         </a>
         <span class="folder-status-inline" data-folder-name="BA330 - Wesleyan Spirituality And Advocacies"></span>
     </div>
+	
+	<div id="visit-counter" style="margin-top:40px; font-size:14px; color:white;"></div>
 
     <script>
+	
+	    function getGreeting() {
+			let hour = new Date().getHours();
+			if (hour < 12) return "Good morning";
+			if (hour < 18) return "Good afternoon";
+			return "Good evening";
+		}
+
+		// Check if returning visitor
+		let firstVisit = localStorage.getItem("first_visit");
+		if (!firstVisit) {
+			localStorage.setItem("first_visit", Date.now());
+			firstVisit = false;
+		} else {
+			firstVisit = true;
+		}
+
+		let greetMsg = getGreeting();
+		if (firstVisit) {
+			greetMsg += ", welcome back!";
+		} else {
+			greetMsg += ", welcome to the page!";
+		}
+
+    document.getElementById("greeting").textContent = greetMsg;
+	
         const STATUS_API_URL = "https://script.google.com/macros/s/AKfycbzZh275b0qUi5ocpOSo3XERkBCOBMcYZmUU31WWe1Ir0IhBz4_1KTAE_7Zv8ID4UymZ/exec";
 
         async function loadFolderStatus() {
@@ -159,6 +198,14 @@
         }
 
         document.addEventListener("DOMContentLoaded", loadFolderStatus);
+		
+		 // Simple visit counter using localStorage
+		let visits = localStorage.getItem("visit_count");
+		visits = visits ? parseInt(visits) + 1 : 1;
+		localStorage.setItem("visit_count", visits);
+
+		document.getElementById("visit-counter").textContent =
+			"Your visit count on this device: " + visits;
     </script>
 </body>
 </html>
