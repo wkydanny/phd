@@ -311,15 +311,12 @@
 
   function displayWeeklySchedule() {
     const now = new Date();
-    // 1. Get current time in GMT+8
     const gmt8Now = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Shanghai"}));
     
-    // 2. Start of week is previous Sunday 00:00 GMT+8
     const startOfWeek = new Date(gmt8Now);
     startOfWeek.setDate(gmt8Now.getDate() - gmt8Now.getDay());
     startOfWeek.setHours(0, 0, 0, 0);
 
-    // 3. Week 4 base calculation (Jan 18, 2026)
     const baseDate = new Date("2026-01-18T00:00:00+08:00");
     const diffWeeks = Math.floor((startOfWeek - baseDate) / (7 * 24 * 60 * 60 * 1000));
     const currentWeekNum = 4 + diffWeeks;
@@ -338,28 +335,30 @@
     title.textContent = "Week " + currentWeekNum + " Schedule";
 
     weeklyClasses.forEach(item => {
-      // Create date objects with the GMT+8 offset from CSV
       const startDT = new Date(`${item.date}T${item.start}:00+08:00`);
       const endDT = new Date(`${item.date}T${item.end}:00+08:00`);
 
-      // Browser handles the conversion to local device time
       const lDate = startDT.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
       const lStart = startDT.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
       const lEnd = endDT.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 
-      let cDisp = item.course;
-      if (cDisp.includes("(Asyc)")) {
-        cDisp = cDisp.replace("(Asyc)", '<span style="color: red; font-weight: bold;">(Asyc)</span>');
-      }
+      // LOGIC: Extract the course number and color it blue
+      // Split by space: [0] is "BA330", [1] is "(Asyc)" (if exists)
+      let parts = item.course.split(" ");
+      let courseNum = `<span style="color: #3399ff;">${parts[0]}</span>`; // Light blue for visibility on grey
+      let asycLabel = parts[1] ? ` <span style="color: red; font-weight: bold;">${parts[1]}</span>` : "";
 
       const row = document.createElement("div");
       row.style.marginBottom = "6px";
       row.style.fontSize = "13px";
-      // Combined into one line: Course, Date, and Time
-      row.innerHTML = `<strong>${cDisp}</strong>: ${lDate} @ ${lStart} - ${lEnd}`;
+      row.innerHTML = `<strong>${courseNum}${asycLabel}</strong>: ${lDate} @ ${lStart} - ${lEnd}`;
       container.appendChild(row);
     });
   }
 
   document.addEventListener("DOMContentLoaded", displayWeeklySchedule);
 </script>
+
+
+
+
