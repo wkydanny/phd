@@ -519,5 +519,48 @@
 
   <p><a href="index.html">← Back to Main Page</a></p>
 
+  <script>
+  function filterPastWeeks() {
+    const now = new Date();
+    // 1. Get current time in GMT+8 (Philippines Time)
+    const gmt8Now = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Shanghai"}));
+
+    // 2. Define the Expiration Date for each week (The Sunday 00:00 GMT+8 following the week)
+    const weekExpirationDates = {
+      4: new Date("2026-01-25T00:00:00+08:00"),
+      5: new Date("2026-02-01T00:00:00+08:00"),
+      6: new Date("2026-02-08T00:00:00+08:00"),
+      7: new Date("2026-02-15T00:00:00+08:00"),
+      8: new Date("2026-02-22T00:00:00+08:00"),
+      9: new Date("2026-03-01T00:00:00+08:00"),
+      10: new Date("2026-03-08T00:00:00+08:00"),
+      11: new Date("2026-03-15T00:00:00+08:00"),
+      12: new Date("2026-03-22T00:00:00+08:00"),
+      13: new Date("2026-03-29T00:00:00+08:00"),
+      14: new Date("2026-04-05T00:00:00+08:00"),
+      15: new Date("2026-04-12T00:00:00+08:00")
+    };
+
+    // 3. Iterate through all rows and hide any that are in the past
+    const rows = document.querySelectorAll("tbody tr");
+    rows.forEach(row => {
+      const weekCell = row.cells[0].textContent.trim();
+      const weekNum = parseInt(weekCell);
+      
+      if (weekExpirationDates[weekNum]) {
+        // If the current GMT+8 time has passed a week's Sunday deadline, hide that week
+        // This is cumulative: on Feb 8, it hides Weeks 4, 5, and 6
+        if (gmt8Now >= weekExpirationDates[weekNum]) {
+          row.style.display = "none";
+        }
+      }
+    });
+  }
+
+  // Run filter on page load
+  document.addEventListener("DOMContentLoaded", filterPastWeeks);
+  </script>
+  
 </body>
+
 </html>
