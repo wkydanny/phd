@@ -69,17 +69,36 @@
     </a>
   </div>
 
-  <div>
-    <a
-      class="zoom-link"
-      href="https://us02web.zoom.us/j/8090516994?pwd=SjY4I9MPLMAVOQRAfxGi6J6ke04Gfg.1"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Zoom Link
-    </a>
+  <table style="margin: 30px auto 0 auto; border-collapse: collapse; border: none; background: none;">
+    <tr>
+      <td style="padding: 0 10px; border: none;">
+        <a
+          class="zoom-link"
+          href="https://us02web.zoom.us/j/8090516994?pwd=SjY4I9MPLMAVOQRAfxGi6J6ke04Gfg.1"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="margin-top: 0;"
+        >
+          Zoom Link
+        </a>
+      </td>
+      <td style="padding: 0 10px; border: none;">
+        <a
+          class="zoom-link"
+          style="border-color: black; color: orange; margin-top: 0;" 
+          href="TimeSchedule.html"
+        >
+          View Full Time Schedule
+        </a>
+      </td>
+    </tr>
+  </table>
+  
+  <div id="weekly-schedule-container" style="margin-top: 30px; color: white; text-align: center;">
+    <h3 id="week-title" style="color: yellow;">Loading This Week's Schedule...</h3>
+    <div id="schedule-list" style="display: inline-block; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border: 1px solid #555;">
+    </div>
   </div>
-
   <br />
 
   <div>
@@ -106,22 +125,22 @@
       BA322 - Data And Business Analytics
     </a>, by Dr. Raymond Cheng
     <span class="folder-status-inline" data-folder-name="BA322 - Data And Business Analytics"></span>
-    <br>
-	  <font color="yellow">BA322 - Youtube videos: </font>
-  	<a
-        class="drive-link"
-        data-folder-name="BA322 - Lessons 1"
-        href="https://www.youtube.com/watch?v=K68EIQJjWx8"
-        target="_blank"
-        rel="noopener noreferrer"> 01 
-    </a>
-  	<a
-        class="drive-link"
-        data-folder-name="BA322 - Lessons 1"
-        href="https://www.youtube.com/watch?v=8uOmaBiqliY"
-        target="_blank"
-        rel="noopener noreferrer"> 02 
-    </a>
+	<br>
+	<font color="yellow">BA322 - Youtube videos: </font>
+	<a
+      class="drive-link"
+      data-folder-name="BA322 - Lessons 1"
+      href="https://www.youtube.com/watch?v=K68EIQJjWx8"
+      target="_blank"
+      rel="noopener noreferrer"> 01 
+	</a>
+	<a
+      class="drive-link"
+      data-folder-name="BA322 - Lessons 1"
+      href="https://www.youtube.com/watch?v=8uOmaBiqliY"
+      target="_blank"
+      rel="noopener noreferrer"> 02 
+	</a>
   </div>
 
   <div>
@@ -232,3 +251,115 @@
   </script>
 </body>
 </html>
+
+<script>
+  const scheduleData = [
+    { week: 4, course: "BA330", date: "2026-01-24", start: "08:00", end: "10:00" },
+    { week: 4, course: "BA326 (Asyc)", date: "2026-01-24", start: "10:00", end: "12:00" },
+    { week: 4, course: "BA329 (Asyc)", date: "2026-01-24", start: "15:00", end: "17:00" },
+    { week: 4, course: "BA321", date: "2026-01-24", start: "17:00", end: "19:00" },
+    { week: 5, course: "BA322", date: "2026-01-30", start: "19:00", end: "22:00" },
+    { week: 5, course: "BA330 (Asyc)", date: "2026-01-31", start: "08:00", end: "10:00" },
+    { week: 5, course: "BA326 (Asyc)", date: "2026-01-31", start: "10:00", end: "12:00" },
+    { week: 5, course: "BA329 (Asyc)", date: "2026-01-31", start: "15:00", end: "17:00" },
+    { week: 5, course: "BA321 (Asyc)", date: "2026-01-31", start: "17:00", end: "19:00" },
+    { week: 6, course: "BA330", date: "2026-02-07", start: "08:00", end: "10:00" },
+    { week: 6, course: "BA326", date: "2026-02-07", start: "10:00", end: "12:00" },
+    { week: 6, course: "BA329", date: "2026-02-07", start: "15:00", end: "17:00" },
+    { week: 6, course: "BA321", date: "2026-02-07", start: "17:00", end: "19:00" },
+    { week: 7, course: "BA322", date: "2026-02-13", start: "19:00", end: "22:00" },
+    { week: 7, course: "BA330 (Asyc)", date: "2026-02-14", start: "08:00", end: "10:00" },
+    { week: 7, course: "BA326 (Asyc)", date: "2026-02-14", start: "10:00", end: "12:00" },
+    { week: 7, course: "BA329 (Asyc)", date: "2026-02-14", start: "15:00", end: "17:00" },
+    { week: 7, course: "BA321 (Asyc)", date: "2026-02-14", start: "17:00", end: "19:00" },
+    { week: 8, course: "BA330 (Asyc)", date: "2026-02-21", start: "08:00", end: "10:00" },
+    { week: 8, course: "BA326 (Asyc)", date: "2026-02-21", start: "10:00", end: "12:00" },
+    { week: 8, course: "BA329 (Asyc)", date: "2026-02-21", start: "15:00", end: "17:00" },
+    { week: 8, course: "BA321 (Asyc)", date: "2026-02-21", start: "17:00", end: "19:00" },
+    { week: 9, course: "BA322", date: "2026-02-27", start: "19:00", end: "22:00" },
+    { week: 9, course: "BA330", date: "2026-02-28", start: "08:00", end: "10:00" },
+    { week: 9, course: "BA326", date: "2026-02-28", start: "10:00", end: "12:00" },
+    { week: 9, course: "BA329", date: "2026-02-28", start: "15:00", end: "17:00" },
+    { week: 9, course: "BA321", date: "2026-02-28", start: "17:00", end: "19:00" },
+    { week: 10, course: "BA330", date: "2026-03-07", start: "08:00", end: "10:00" },
+    { week: 10, course: "BA326", date: "2026-03-07", start: "10:00", end: "12:00" },
+    { week: 10, course: "BA329", date: "2026-03-07", start: "15:00", end: "17:00" },
+    { week: 10, course: "BA321", date: "2026-03-07", start: "17:00", end: "19:00" },
+    { week: 11, course: "BA322", date: "2026-03-13", start: "19:00", end: "22:00" },
+    { week: 11, course: "BA330", date: "2026-03-14", start: "08:00", end: "10:00" },
+    { week: 11, course: "BA326", date: "2026-03-14", start: "10:00", end: "12:00" },
+    { week: 11, course: "BA329", date: "2026-03-14", start: "15:00", end: "17:00" },
+    { week: 11, course: "BA321", date: "2026-03-14", start: "17:00", end: "19:00" },
+    { week: 12, course: "BA330 (Asyc)", date: "2026-03-21", start: "08:00", end: "10:00" },
+    { week: 12, course: "BA326 (Asyc)", date: "2026-03-21", start: "10:00", end: "12:00" },
+    { week: 12, course: "BA329 (Asyc)", date: "2026-03-21", start: "15:00", end: "17:00" },
+    { week: 12, course: "BA321 (Asyc)", date: "2026-03-21", start: "17:00", end: "19:00" },
+    { week: 13, course: "BA322", date: "2026-03-27", start: "19:00", end: "22:00" },
+    { week: 13, course: "BA330", date: "2026-03-28", start: "08:00", end: "10:00" },
+    { week: 13, course: "BA326", date: "2026-03-28", start: "10:00", end: "12:00" },
+    { week: 13, course: "BA329", date: "2026-03-28", start: "15:00", end: "17:00" },
+    { week: 13, course: "BA321", date: "2026-03-28", start: "17:00", end: "19:00" },
+    { week: 14, course: "BA330", date: "2026-04-04", start: "08:00", end: "10:00" },
+    { week: 14, course: "BA326", date: "2026-04-04", start: "10:00", end: "12:00" },
+    { week: 14, course: "BA329", date: "2026-04-04", start: "15:00", end: "17:00" },
+    { week: 14, course: "BA321", date: "2026-04-04", start: "17:00", end: "19:00" },
+    { week: 15, course: "BA330", date: "2026-04-11", start: "08:00", end: "10:00" },
+    { week: 15, course: "BA326", date: "2026-04-11", start: "10:00", end: "12:00" },
+    { week: 15, course: "BA329", date: "2026-04-11", start: "15:00", end: "17:00" },
+    { week: 15, course: "BA321", date: "2026-04-11", start: "17:00", end: "19:00" }
+  ];
+
+  function displayWeeklySchedule() {
+    const now = new Date();
+    // 1. Get current time in GMT+8
+    const gmt8Now = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Shanghai"}));
+    
+    // 2. Start of week is previous Sunday 00:00 GMT+8
+    const startOfWeek = new Date(gmt8Now);
+    startOfWeek.setDate(gmt8Now.getDate() - gmt8Now.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    // 3. Week 4 base calculation (Jan 18, 2026)
+    const baseDate = new Date("2026-01-18T00:00:00+08:00");
+    const diffWeeks = Math.floor((startOfWeek - baseDate) / (7 * 24 * 60 * 60 * 1000));
+    const currentWeekNum = 4 + diffWeeks;
+
+    const container = document.getElementById("schedule-list");
+    const title = document.getElementById("week-title");
+    container.innerHTML = "";
+
+    const weeklyClasses = scheduleData.filter(c => c.week === currentWeekNum);
+
+    if (weeklyClasses.length === 0) {
+      title.textContent = "No classes for Week " + currentWeekNum;
+      return;
+    }
+
+    title.textContent = "Week " + currentWeekNum + " Schedule";
+
+    weeklyClasses.forEach(item => {
+      // Create date objects with the GMT+8 offset from CSV
+      const startDT = new Date(`${item.date}T${item.start}:00+08:00`);
+      const endDT = new Date(`${item.date}T${item.end}:00+08:00`);
+
+      // Browser handles the conversion to local device time
+      const lDate = startDT.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+      const lStart = startDT.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+      const lEnd = endDT.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+
+      let cDisp = item.course;
+      if (cDisp.includes("(Asyc)")) {
+        cDisp = cDisp.replace("(Asyc)", '<span style="color: red; font-weight: bold;">(Asyc)</span>');
+      }
+
+      const row = document.createElement("div");
+      row.style.marginBottom = "6px";
+      row.style.fontSize = "13px";
+      // Combined into one line: Course, Date, and Time
+      row.innerHTML = `<strong>${cDisp}</strong>: ${lDate} @ ${lStart} - ${lEnd}`;
+      container.appendChild(row);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", displayWeeklySchedule);
+</script>
