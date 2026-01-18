@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pre-PhD - Dr. Raymond Cheng</title>
+  <link rel="icon" type="image/jpeg" href="https://i.ibb.co/XfvZcC5K/IMG-2060.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: grey;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .logo {
+      max-width: 125px;
+      height: auto;
+    }
+    /* Style for all link states */
+    a, a:visited, a:hover {
+      color: blue;
+      text-decoration: none;
+    }
+    a:hover {
+      color: black;
+      text-decoration: underline;
+    }
+    .greeting {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: white;
+    }
+    .drive-link {
+      display: inline-block;
+      margin-top: 10px;
+    }
+    .video-container {
+      margin-top: 20px;
+      line-height: 1.8;
+    }
+    .video-label {
+      color: yellow;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="greeting" class="greeting"></div>
+
+  <div>
+    <a href="https://www.wesleyan.edu.ph/grad_school/" target="_blank" rel="noopener noreferrer">
+      <img class="logo" src="Grad_School_Logo_for_web.png" alt="WUP PhD Logo" />
+    </a>
+  </div>
+
+  <h2 style="color: white; margin-top: 30px;">Pre-PhD Course Materials</h2>
+
+  <div>
+    <a
+      class="drive-link"
+      href="https://drive.google.com/drive/folders/1Mkyc-2tudxxDSp2X7IY3vamL4_-KZNmB?usp=drive_link"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Pre-PhD Course Drive
+    </a>, by Dr. Raymond Cheng
+  </div>
+
+  <div class="video-container">
+    <span class="video-label">Lecture Video Archives:</span><br>
+    <a class="drive-link" href="https://www.youtube.com/watch?v=27BuPO1omPs" target="_blank">L01 (2025-08-15)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=deRgWiA3dYo" target="_blank">L02 (2025-08-22)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=MmSycehxGq4" target="_blank">L03 (2025-08-29)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=ps_BIT6fgw8" target="_blank">L04 (2025-09-05)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=tAGJsP5kJR8" target="_blank">L05 (2025-09-12)</a><br>
+    
+    <a class="drive-link" href="https://www.youtube.com/watch?v=TdqMOOMv7t4" target="_blank">L06 (2025-09-19)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=A9ZY-erSxB4" target="_blank">L07 (2025-10-03)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=mSaQ_G-FkL0" target="_blank">L08 (2025-10-05)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=mKEGIT-tUOU" target="_blank">L09 (2025-10-24)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=GeXoWORVB6w" target="_blank">L10 (2025-10-31)</a><br>
+    
+    <a class="drive-link" href="https://www.youtube.com/watch?v=anKZuw-RvrE" target="_blank">L11 (2025-11-07)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=O2FzKI-TOEY" target="_blank">L12 (2025-11-14)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=JzJhdQhTdVI" target="_blank">L13 (2025-11-21)</a> |
+    <a class="drive-link" href="https://www.youtube.com/watch?v=jxLfpSfOuwM" target="_blank">L14 (2025-11-28)</a>
+  </div>
+
+  <div style="margin-top: 40px;">
+    <a href="index.html" style="color: orange; font-size: 14px; border: 1px solid #333; padding: 5px 10px; border-radius: 4px;">← Back to Main Page</a>
+  </div>
+
+  <script>
+    function getGreeting() {
+      const hour = new Date().getHours();
+      if (hour < 12) return "Good morning";
+      if (hour < 18) return "Good afternoon";
+      return "Good evening";
+    }
+
+    let greetMsg = getGreeting() + ", welcome to the Pre-PhD archive!";
+    document.getElementById("greeting").textContent = greetMsg;
+  </script>
+</body>
+</html>
